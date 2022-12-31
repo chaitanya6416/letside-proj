@@ -13,7 +13,7 @@ class Rider(models.Model):
     name = models.CharField(max_length=255)
     start_location = models.CharField(max_length=255)
     end_location = models.CharField(max_length=255)
-    date_of_travel = models.DateField(default=date(2022,1,1))
+    date_of_travel = models.CharField(max_length=10,default='20220101')
     travel_medium = models.CharField(max_length=5, choices=MEDIUM_CHOICES, default=BUS)
     phone_number = models.CharField(max_length=255, default='0')
 

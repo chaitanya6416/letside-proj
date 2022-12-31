@@ -21,9 +21,22 @@ class Requester(models.Model):
         (NORMAL, 'Normal')
     ]
     
+    PENDING = 'pending'
+    EXPIRED = 'expired'
+    STATUS_CHOICES = [
+        (PENDING, 'Pending'),
+        (EXPIRED, 'Expired')
+    ]
+
     name = models.CharField(max_length=255)
     start_location = models.CharField(max_length=255)
     end_location = models.CharField(max_length=255)
-    date_of_travel = models.DateField(default=date(2022,1,1))
+    date_of_travel = models.CharField(max_length=10,default='20220101')
     asset_type = models.CharField(max_length=20, choices = ASSET_CHOICES, default=PACKAGE)
     sensitivity = models.CharField(max_length=20, choices = SENSITIVITY_CHOICES, default=NORMAL)
+    status = models.CharField(max_length= 20 , choices = STATUS_CHOICES, default= PENDING)
+
+
+class Matching(models.Model):
+    req_id = models.BigIntegerField()
+    rid_id = models.BigIntegerField()
