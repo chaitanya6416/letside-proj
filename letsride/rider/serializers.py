@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from  .models import Rider
+from .models import Rider
+
 
 class RiderSerializer(serializers.ModelSerializer):
     class Meta:

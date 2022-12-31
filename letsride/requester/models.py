@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import date
 
+
 class Requester(models.Model):
 
     LAPTOP = 'laptop'
@@ -14,13 +15,13 @@ class Requester(models.Model):
 
     HIGHLY_SENSITIVE = 'highly_sensitive'
     SENSITIVE = 'sensitive'
-    NORMAL ='normal'
+    NORMAL = 'normal'
     SENSITIVITY_CHOICES = [
         (HIGHLY_SENSITIVE, 'Highly_Sensitive'),
         (SENSITIVE, 'Sensitive'),
         (NORMAL, 'Normal')
     ]
-    
+
     PENDING = 'pending'
     EXPIRED = 'expired'
     STATUS_CHOICES = [
@@ -31,10 +32,13 @@ class Requester(models.Model):
     name = models.CharField(max_length=255)
     start_location = models.CharField(max_length=255)
     end_location = models.CharField(max_length=255)
-    date_of_travel = models.CharField(max_length=10,default='20220101')
-    asset_type = models.CharField(max_length=20, choices = ASSET_CHOICES, default=PACKAGE)
-    sensitivity = models.CharField(max_length=20, choices = SENSITIVITY_CHOICES, default=NORMAL)
-    status = models.CharField(max_length= 20 , choices = STATUS_CHOICES, default= PENDING)
+    date_of_travel = models.CharField(max_length=10, default='20220101')
+    asset_type = models.CharField(
+        max_length=20, choices=ASSET_CHOICES, default=PACKAGE)
+    sensitivity = models.CharField(
+        max_length=20, choices=SENSITIVITY_CHOICES, default=NORMAL)
+    status = models.CharField(
+        max_length=20, choices=STATUS_CHOICES, default=PENDING)
 
 
 class Matching(models.Model):

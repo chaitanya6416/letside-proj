@@ -1,25 +1,23 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse
-from django.db import connection
-from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from  .serializers import RequesterSerializer, MatchingSerializer
+from .serializers import RequesterSerializer, MatchingSerializer
 from .models import Requester, Matching
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.generics import ListAPIView
 from django.core.paginator import Paginator
 
+
 def index(request):
-    return HttpResponse("Hello World from requester") 
+    return HttpResponse("Hello World from requester")
+
 
 @api_view(["POST"])
 def requester_form(request):
     if request.method == 'POST':
-        serializer = RequesterSerializer(data = request.data)
+        serializer = RequesterSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
         return Response(serializer.data)
+
 
 @api_view(["GET"])
 def requester_list(request):
@@ -27,25 +25,27 @@ def requester_list(request):
         requesters = Requester.objects.all()
 
         if request.GET.get('asset_type'):
-            requesters = requesters.filter(asset_type = request.GET.get('asset_type'))
+            requesters = requesters.filter(
+                asset_type=request.GET.get('asset_type'))
         if request.GET.get('status'):
-            requesters = requesters.filter(status = request.GET.get('status'))
-        
+            requesters = requesters.filter(status=request.GET.get('status'))
+
         requesters = requesters.order_by('date_of_travel')
-        paginator_size=10
+        paginator_size = 10
         if request.GET.get('paginator_size'):
-            paginator_size=request.GET.get('paginator_size')
+            paginator_size = request.GET.get('paginator_size')
         paginator = Paginator(requesters, paginator_size)
         page = request.GET.get('page')
 
-        serializer = RequesterSerializer(paginator.get_page(page), many=True)   
+        serializer = RequesterSerializer(paginator.get_page(page), many=True)
 
         return Response(serializer.data)
+
 
 @api_view(["POST"])
 def requester_apply_to_rider(request):
     if request.method == 'POST':
-        serializer = MatchingSerializer(data = request.data)
+        serializer = MatchingSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
         return Response(serializer.data)

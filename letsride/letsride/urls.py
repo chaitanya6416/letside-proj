@@ -19,7 +19,7 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('match/', views.caller),
+    path('match/', views.list_matching_cases),
     path('rider/', include('rider.urls')),
     path('requester/', include('requester.urls'))
 ]
