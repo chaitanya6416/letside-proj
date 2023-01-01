@@ -7,7 +7,7 @@ from tabulate import tabulate
 def list_matching_cases(request):
     query ='''
         SELECT 
-        A.id, A.name, A.start_location, A.end_location, A.date_of_travel, A.travel_medium, B.id, B.name ,
+        B.id, B.name, A.id, A.name, A.start_location, A.end_location, A.date_of_travel, A.travel_medium ,
         (CASE
             WHEN C.id is null THEN "Not Applied"
             ELSE "Applied"
@@ -25,6 +25,6 @@ def list_matching_cases(request):
     cursor = connection.cursor()
     cursor.execute(query)
     results = cursor.fetchall()
-    headers = ['rider_id','rider_name','rider_start_location','rider_end_location','date_of_travel','travel_medium','requester_id', 'requester_name', 'app_status']
+    headers = ['requester_id', 'requester_name','rider_id','rider_name','start_location','end_location','date_of_travel','travel_medium', 'app_status']
     print(tabulate(results, headers, tablefmt='fancy_grid'))
     return HttpResponse(results )
