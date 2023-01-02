@@ -24,16 +24,17 @@ def requester_list(request):
     if request.method == 'GET':
         requesters = Requester.objects.all()
 
-        if request.GET.get('asset_type'):
+        if asset_type := request.GET.get('asset_type'):
             requesters = requesters.filter(
-                asset_type=request.GET.get('asset_type'))
-        if request.GET.get('status'):
-            requesters = requesters.filter(status=request.GET.get('status'))
+                asset_type=asset_type)
+        if status := request.GET.get('status'):
+            requesters = requesters.filter(status=status)
 
         requesters = requesters.order_by('date_of_travel')
+        
         paginator_size = 10
-        if request.GET.get('paginator_size'):
-            paginator_size = request.GET.get('paginator_size')
+        if custom_paginator_size := request.GET.get('paginator_size'):
+            paginator_size = custom_paginator_size
         paginator = Paginator(requesters, paginator_size)
         page = request.GET.get('page')
 
